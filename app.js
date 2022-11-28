@@ -82,12 +82,15 @@ const checkedAuthenticated = (req, res, next) => {
     next();
 }
 
-app.get("/login", checkedAuthenticated, (req, res) => {
+app.get("/login", (req, res) => {
     res.render("login")
 })
 
-app.post('/login',
-    passport.authenticate('local', { failureRedirect: '/login', successRedirect: "/profile" }));
+app.get('/auth/google',
+    passport.authenticate('google', { scope: ['profile'] }));
+
+app.get('/auth/google/callback',
+    passport.authenticate('google', { failureRedirect: '/login', successRedirect: "/profile" }));
 
 
 // profile
@@ -99,7 +102,7 @@ const isCheckedAuthenticated = (req, res, next) => {
 }
 
 app.get("/profile", isCheckedAuthenticated, (req, res) => {
-    res.render("profile")
+    res.render("profile", { username: req.user.username })
 })
 
 // logout 

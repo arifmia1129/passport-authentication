@@ -6,6 +6,10 @@ const dev = {
     },
     db: {
         url: process.env.DB_URL
+    },
+    googleClient: {
+        id: process.env.GOOGLE_CLIENT_ID,
+        secret: process.env.GOOGLE_CLIENT_SECRET
     }
 }
 
